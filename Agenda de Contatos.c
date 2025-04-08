@@ -32,7 +32,7 @@ void carregar_contatos(const char *nome_arquivo) {
 void salvar_contatos(const char *nome_arquivo) {
     FILE *arquivo = fopen(nome_arquivo, "w");
     if (!arquivo) {
-        perror("Erro ao salvar o arquivo");
+        printf("Erro ao salvar o arquivo");
         return;
     }
 
