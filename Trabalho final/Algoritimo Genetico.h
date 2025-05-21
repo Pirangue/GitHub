@@ -7,17 +7,17 @@
 /**
  * * Função que inicializa a população de indivíduos.
  * * A função percorre a população e inicializa cada indivíduo com um genoma aleatório.
- * * @param pop ponteiro para a população
+ * * @param lista ponteiro para a população
  */
-void inicializar_populacao(Populacao* pop);
+void inicializar_populacao(Populacao* lista);
 
 /**
  * * Função que seleciona um indivíduo aleatório da população.
  * * A função percorre a população e escolhe um indivíduo aleatório.
- * * @param pop ponteiro para a população
+ * * @param lista ponteiro para a população
  * @return TNo indivíduo selecionado
  */
-TNo selecao_torneio(Populacao* pop);
+TNo* selecao_torneio(Populacao* lista);
 
 /**
  * * Função que realiza o crossover entre dois indivíduos.
@@ -38,8 +38,8 @@ void mutacao(TNo* ind);
 /**
  * * Função que gera uma nova geração de indivíduos.
  * * A função preserva o melhor indivíduo da geração anterior e gera novos indivíduos.
- * @param pop ponteiro para a população
+ * @param lista ponteiro para a população
  */
-void nova_geracao(Populacao* pop);
+void nova_geracao(Populacao* lista);
 
 #endif

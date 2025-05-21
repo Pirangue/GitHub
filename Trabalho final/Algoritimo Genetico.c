@@ -5,20 +5,26 @@
 #include <time.h>
 #include <math.h>
 
-void inicializar_populacao(Populacao* pop) {
+void inicializar_populacao(Populacao* lista) {
     for (int i = 0; i < POPULACAO; i++) {
+        TNo* individuo = (TNo*)malloc(sizeof(TNo));
         for (int j = 0; j < TAMANHO_GENOMA; j++) {
-            pop->individuos[i].info[j] = rand() % 4;
+            individuo->info[j] = rand() % 4;
         }
-        calcular_fitness(&pop->individuos[i]);
+        calcular_fitness(individuo);
+        adicionar_individuo(lista, individuo);
     }
 }
 
-TNo selecao_torneio(Populacao* pop) {
-    TNo melhor = pop->individuos[rand() % POPULACAO];
-    for (int i = 1; i < TORNEIO; i++) {
-        TNo candidato = pop->individuos[rand() % POPULACAO];
-        if (candidato.fitness > melhor.fitness) {
+TNo* selecao_torneio(Populacao* lista) {
+    TNo* melhor = NULL;
+    for (int i = 0; i < TORNEIO; i++) {
+        int indice = rand() % lista->tamanho;
+        TNo* candidato = lista->cabeca;
+        for (int j = 0; j < indice; j++) {
+            candidato = candidato->prox;
+        }
+        if (melhor == NULL || candidato->fitness > melhor->fitness) {
             melhor = candidato;
         }
     }
@@ -43,28 +49,33 @@ void mutacao(TNo* ind) {
     }
 }
 
-void nova_geracao(Populacao* pop) {
-    Populacao nova_populacao;
+void nova_geracao(Populacao* lista) {
+    Populacao nova_lista = {NULL, 0};
 
     // Preservar o melhor indivíduo
-    TNo melhor = pop->individuos[0];
-    for (int i = 1; i < POPULACAO; i++) {
-        if (pop->individuos[i].fitness > melhor.fitness) {
-            melhor = pop->individuos[i];
+    TNo* atual = lista->cabeca;
+    TNo* melhor = atual;
+    while (atual != NULL) {
+        if (atual->fitness > melhor->fitness) {
+            melhor = atual;
         }
+        atual = atual->prox;
     }
-    nova_populacao.individuos[0] = melhor;
+    TNo* melhor_copia = (TNo*)malloc(sizeof(TNo));
+    *melhor_copia = *melhor;
+    adicionar_individuo(&nova_lista, melhor_copia);
 
     // Gerar novos indivíduos
     for (int i = 1; i < POPULACAO; i++) {
-        TNo pai1 = selecao_torneio(pop);
-        TNo pai2 = selecao_torneio(pop);
-        TNo filho;
-        crossover(&pai1, &pai2, &filho);
-        mutacao(&filho);
-        calcular_fitness(&filho);
-        nova_populacao.individuos[i] = filho;
+        TNo* pai1 = selecao_torneio(lista);
+        TNo* pai2 = selecao_torneio(lista);
+        TNo* filho = (TNo*)malloc(sizeof(TNo));
+        crossover(pai1, pai2, filho);
+        mutacao(filho);
+        calcular_fitness(filho);
+        adicionar_individuo(&nova_lista, filho);
     }
 
-    *pop = nova_populacao;
+    liberar_lista(lista);
+    *lista = nova_lista;
 }

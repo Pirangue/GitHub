@@ -14,33 +14,36 @@ int main() {
     imprimir_labirinto();
     encontrar_posicoes();
 
-    Populacao populacao;
+    Populacao populacao = {NULL, 0};
     inicializar_populacao(&populacao);
 
     int geracao = 0;
-    TNo melhor;
+    TNo* melhor;
     do {
         printf("\nGeracao %d:\n\n", geracao + 1);
 
         // Encontrar o melhor indivíduo
-        melhor = populacao.individuos[0];
-        for (int i = 1; i < POPULACAO; i++) {
-            if (populacao.individuos[i].fitness > melhor.fitness) {
-                melhor = populacao.individuos[i];
+        TNo* atual = populacao.cabeca;
+        melhor = atual;
+        while (atual != NULL) {
+            if (atual->fitness > melhor->fitness) {
+                melhor = atual;
             }
+            atual = atual->prox;
         }
 
-        printf("Melhor fitness: %d\n", melhor.fitness);
-        simular_caminho(&melhor);
+        printf("Melhor fitness: %d\n", melhor->fitness);
+        simular_caminho(melhor);
 
-        if (melhor.fitness >= 1000) {
+        if (melhor->fitness >= 1000) {
             printf("Solucao encontrada!\n");
             break;
         }
 
         nova_geracao(&populacao);
         geracao++;
-    } while (melhor.fitness < 1000);
+    } while (melhor->fitness < 1000);
 
+    liberar_lista(&populacao);
     return 0;
 }

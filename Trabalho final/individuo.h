@@ -4,13 +4,15 @@
 #include "configuracao.h"
 #include "mapa.h"
 
-typedef struct {
+typedef struct Nodo {
     int info[TAMANHO_GENOMA];
     int fitness;
+    struct Nodo* prox;
 } TNo;
 
 typedef struct {
-    TNo individuos[POPULACAO];
+    TNo* cabeca;
+    int tamanho;
 } Populacao;
 
 /**
@@ -26,5 +28,18 @@ void calcular_fitness(TNo* ind);
  * * @param ind ponteiro para o indivíduo
  */
 void simular_caminho(TNo* ind);
+
+/**
+ * * Função que adiciona um indivíduo à população.
+ * * @param lista ponteiro para a população
+ * @param individuo ponteiro para o indivíduo
+ */
+void adicionar_individuo(Populacao* lista, TNo* individuo);
+
+/**
+ * * Função que libera a memória da lista de indivíduos.
+ * * @param lista ponteiro para a população
+ */
+void liberar_lista(Populacao* lista);
 
 #endif

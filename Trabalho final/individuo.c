@@ -72,3 +72,20 @@ void simular_caminho(TNo* ind) {
         printf("\n");
     }
 }
+
+void adicionar_individuo(Populacao* lista, TNo* individuo) {
+    individuo->prox = lista->cabeca;
+    lista->cabeca = individuo;
+    lista->tamanho++;
+}
+
+void liberar_lista(Populacao* lista) {
+    TNo* atual = lista->cabeca;
+    while (atual != NULL) {
+        TNo* temp = atual;
+        atual = atual->prox;
+        free(temp);
+    }
+    lista->cabeca = NULL;
+    lista->tamanho = 0;
+}
