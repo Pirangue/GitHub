@@ -1,7 +1,7 @@
 #ifndef INDIVIDUO_H
 #define INDIVIDUO_H
 
-#include "labirinto.h"
+#include "../Labirinto/labirinto.h"
 
 typedef struct Individuo {
     int* genoma;

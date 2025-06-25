@@ -1,8 +1,8 @@
 #ifndef POPULACAO_H
 #define POPULACAO_H
 
-#include "individuo.h"
-#include "labirinto.h"
+#include "../Povo/individuo.h"
+#include "../Labirinto/labirinto.h"
 
 typedef struct Nodo {
     Individuo* ind;

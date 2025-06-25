@@ -2,7 +2,7 @@
 #define LOG_H
 
 #include <stdio.h>
-#include "individuo.h"
+#include "../Povo/individuo.h"
 
 typedef struct {
     FILE* arquivo;

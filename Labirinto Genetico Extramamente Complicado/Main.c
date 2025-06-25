@@ -3,11 +3,11 @@
 #include <time.h>
 #include <string.h>
 
-#include "config.h"
-#include "labirinto.h"
-#include "individuo.h"
-#include "populacao.h"
-#include "log.h"
+#include "Config/config.h"
+#include "Labirinto/labirinto.h"
+#include "Povo/individuo.h"
+#include "Povo/populacao.h"
+#include "Log/log.h"
 
 int main(int argc, char* argv[]) {
     if (argc < 2) {
