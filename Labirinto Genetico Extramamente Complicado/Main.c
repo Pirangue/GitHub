@@ -11,7 +11,7 @@
 
 int main(int argc, char* argv[]) {
     if (argc < 2) {
-        printf("Uso: %s <arquivo_config.ini>\n", argv[0]);
+        printf("Uso: %s <config.ini>\n", argv[0]);
         return 1;
     }
 

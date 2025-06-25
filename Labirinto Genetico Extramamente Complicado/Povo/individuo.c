@@ -3,13 +3,13 @@
 #include <string.h>
 #include <math.h>
 #include "individuo.h"
+#include <stdbool.h>
 
 Individuo* criar_individuo(int tamanho) {
     Individuo* ind = malloc(sizeof(Individuo));
     ind->genoma = malloc(tamanho * sizeof(int));
     ind->tamanho_genoma = tamanho;
     ind->fitness = 0;
-    // inicialize outros campos se houver
     return ind;
 }
 
@@ -34,10 +34,18 @@ void inicializar_genoma_inteligente(Individuo* ind, Labirinto* lab) {
         int mov;
         int novo_x, novo_y;
         do {
-            mov = rand() % 4;
-            novo_x = x + (mov == 1) - (mov == 0);
-            novo_y = y + (mov == 3) - (mov == 2);
-            tentativas++;
+        mov = rand() % 4;
+
+        // Cálculo dos novos valores de x e y com base no movimento
+        novo_x = x;
+        novo_y = y;
+
+        if (mov == 0) novo_x--;      // cima
+        else if (mov == 1) novo_x++; // baixo
+        else if (mov == 2) novo_y--; // esquerda
+        else if (mov == 3) novo_y++; // direita
+
+        tentativas++;
         } while (!posicao_valida(lab, novo_x, novo_y) && tentativas < 10);
 
         ind->genoma[i] = mov;
@@ -56,13 +64,24 @@ void calcular_fitness(Individuo* ind, Labirinto* lab) {
 
     for (int i = 0; i < ind->tamanho_genoma; i++) {
         int mov = ind->genoma[i];
-        int novo_x = x + (mov == 1) - (mov == 0);
-        int novo_y = y + (mov == 3) - (mov == 2);
+        int novo_x = x;
+        int novo_y = y;
 
-        if ((ult_mov == 0 && mov == 1) || (ult_mov == 1 && mov == 0) ||
-            (ult_mov == 2 && mov == 3) || (ult_mov == 3 && mov == 2)) {
-            colisoes += 2;
-        }
+        if (mov == 0) novo_x--;        // Cima
+        else if (mov == 1) novo_x++;   // Baixo
+        else if (mov == 2) novo_y--;   // Esquerda
+        else if (mov == 3) novo_y++;   // Direita
+
+        // Verifica se o movimento está revertendo o anterior
+        bool movimento_reverso =
+            (ult_mov == 0 && mov == 1) ||
+            (ult_mov == 1 && mov == 0) ||
+            (ult_mov == 2 && mov == 3) ||
+            (ult_mov == 3 && mov == 2);
+
+        if (movimento_reverso) {
+        colisoes += 2;
+    }
 
         if (!posicao_valida(lab, novo_x, novo_y)) {
             colisoes += 5;
@@ -102,8 +121,13 @@ void imprimir_caminho_individuo(Individuo* ind, Labirinto* lab) {
 
     for (int i = 0; i < ind->tamanho_genoma; i++) {
         int mov = ind->genoma[i];
-        int novo_x = x + (mov == 1) - (mov == 0);
-        int novo_y = y + (mov == 3) - (mov == 2);
+        int novo_x = x;
+        int novo_y = y;
+
+        if (mov == 0) novo_x--;        
+        else if (mov == 1) novo_x++;   
+        else if (mov == 2) novo_y--;   
+        else if (mov == 3) novo_y++; 
 
         if (!posicao_valida(lab, novo_x, novo_y)) break;
 
