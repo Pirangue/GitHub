@@ -146,5 +146,5 @@ O sistema suporta duas estratégias:
 
 ## Autor
 
-Cauê Piragé  
+Cauê Piragé  /  João Gabriel Lustosa
 Trabalho acadêmico — Algoritmos Genéticos em C
