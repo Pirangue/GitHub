@@ -36,7 +36,7 @@ int main(int argc, char* argv[]) {
     for (int geracao = 1; geracao <= config->max_geracoes; geracao++) {
         Individuo* melhor = obter_melhor_individuo(pop);
 
-        printf("\nGeração %d:\n", geracao);
+        printf("\nGeracao %d:\n", geracao);
         printf("Melhor fitness: %d\n", melhor->fitness);
         imprimir_caminho_individuo(melhor, &lab);
 
