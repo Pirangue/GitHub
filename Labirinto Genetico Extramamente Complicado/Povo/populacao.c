@@ -67,17 +67,39 @@ static void crossover(Individuo* pai1, Individuo* pai2, Individuo* filho1, Indiv
     filho2->tamanho_genoma = tamanho2;
     filho2->genoma = (int*)malloc(tamanho2 * sizeof(int));
 
-    for (int i = 0; i < tamanho1; i++) {
-        filho1->genoma[i] = (i < pai1->tamanho_genoma && i < pai2->tamanho_genoma) ?
-            ((rand() % 2 == 0) ? pai1->genoma[i] : pai2->genoma[i]) :
-            rand() % 4;
+    for (int i = 0; i < filho1->tamanho_genoma; i++) {
+    if (i < pai1->tamanho_genoma && i < pai2->tamanho_genoma) {
+        // Sorteia aleatoriamente o gene do pai1 ou pai2
+        if (rand() % 2 == 0)
+            filho1->genoma[i] = pai1->genoma[i];
+        else
+            filho1->genoma[i] = pai2->genoma[i];
+    } else if (i < pai1->tamanho_genoma) {
+        filho1->genoma[i] = pai1->genoma[i];
+    } else if (i < pai2->tamanho_genoma) {
+        filho1->genoma[i] = pai2->genoma[i];
+    } else {
+        // Se ultrapassou os dois tamanhos, insere gene aleatório
+        filho1->genoma[i] = rand() % 4;
     }
+}
 
-    for (int i = 0; i < tamanho2; i++) {
-        filho2->genoma[i] = (i < pai1->tamanho_genoma && i < pai2->tamanho_genoma) ?
-            ((rand() % 2 == 0) ? pai2->genoma[i] : pai1->genoma[i]) :
-            rand() % 4;
+for (int i = 0; i < filho2->tamanho_genoma; i++) {
+    if (i < pai1->tamanho_genoma && i < pai2->tamanho_genoma) {
+        // Sorteia aleatoriamente o gene do pai2 ou pai1 (ordem invertida)
+        if (rand() % 2 == 0)
+            filho2->genoma[i] = pai2->genoma[i];
+        else
+            filho2->genoma[i] = pai1->genoma[i];
+    } else if (i < pai2->tamanho_genoma) {
+        filho2->genoma[i] = pai2->genoma[i];
+    } else if (i < pai1->tamanho_genoma) {
+        filho2->genoma[i] = pai1->genoma[i];
+    } else {
+        // Se ultrapassou os dois tamanhos, insere gene aleatório
+        filho2->genoma[i] = rand() % 4;
     }
+}
 }
 
 static void mutacao(Individuo* ind, float taxa) {
