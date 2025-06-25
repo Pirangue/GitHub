@@ -51,7 +51,3 @@ int posicao_valida(Labirinto* lab, int x, int y) {
            y >= 0 && y < lab->largura &&
            lab->mapa[x][y] != '#';
 }
-
-void liberar_labirinto(Labirinto* lab) {
-    // Nada para liberar aqui, mas mantemos a função por organização
-}
