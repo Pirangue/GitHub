@@ -10,18 +10,18 @@
 #include "Log/log.h"
 
 int main(int argc, char* argv[]) {
-    if (argc < 2) {
-        printf("Uso: %s <config.ini>\n", argv[0]);
+    if (argc < 3) {
+        printf("Uso: %s <mapa.ini> <config.ini>\n", argv[0]);
         return 1;
     }
 
     srand(time(NULL));
 
     // Ler arquivo de configuração
-    Config* config = carregar_config(argv[1]);
+    Config* config = carregar_config(argv[2]);
 
     // Carregar o labirinto
-    Labirinto lab = carregar_labirinto(config->arquivo_mapa);
+    Labirinto lab = carregar_labirinto(argv[1]);
     printf("Mapa carregado:\n");
     imprimir_labirinto(&lab);
     printf("\n");

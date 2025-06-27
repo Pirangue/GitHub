@@ -5,7 +5,7 @@ Este projeto implementa um algoritmo genético em linguagem C que encontra um ca
 ---
 
 ## Estrutura do Projeto
-
+```
 .
 ├── Config
 │   ├── config.c
@@ -32,13 +32,13 @@ Este projeto implementa um algoritmo genético em linguagem C que encontra um ca
 ├── Main.c
 ├── mapa.txt
 ├── mapa2.txt
-
+```
 ---
 
 ## Mapa do Labirinto (.txt)
 
 Exemplo de mapa:
-
+```
 ################
 #S       #     #
 #  ### #   ##  #
@@ -50,6 +50,7 @@ Exemplo de mapa:
 # ### ###### # #
 #     #       E#
 ################
+```
 
 'S' é o ponto de partida e 'E' é o objetivo. '#' representa paredes.
 
@@ -85,9 +86,9 @@ gcc Config/config.c Labirinto/labirinto.c Log/log.c Povo/individuo.c Povo/popula
 
 2. Execute o programa passando o arquivo de configuração:
 
-./labirinto.exe config.ini
+./labirinto.exe mapa.txt config.ini
    ou
-./labirinto.exe config2.ini
+./labirinto.exe mapa2.txt config2.ini
 
 ---
 
